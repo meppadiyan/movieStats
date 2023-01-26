@@ -1,1 +1,36 @@
- 
+
+
+SessionId     : 12603039
+Capacity      : 141
+CostPerTicket : 20$ approx
+State         : NSW
+Booked        : 22
+Location      : Liverpool
+Available     : 140
+Brand         : Event Cinemas
+Occupancy     : 13.6%
+MovieName     : Thankam
+Mode          : Auto
+LastUpdatedOn : 26/01/2023 7:59:02 PM
+TotalCost     : 440 $
+Screen        : 7
+Showtime      : Fri 27 January 3:00 PM
+
+SessionId     : 12603052
+Capacity      : 146
+CostPerTicket : 20$ approx
+State         : NSW
+Booked        : 17
+Location      : Liverpool
+Available     : 145
+Brand         : Event Cinemas
+Occupancy     : 10.5%
+MovieName     : Thankam
+Mode          : Auto
+LastUpdatedOn : 26/01/2023 7:59:03 PM
+TotalCost     : 340 $
+Screen        : 7
+Showtime      : Fri 27 January 8:45 PM
+
+
+
