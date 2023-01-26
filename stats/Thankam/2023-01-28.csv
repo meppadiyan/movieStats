@@ -1,0 +1,6 @@
+"SessionId","Capacity","CostPerTicket","State","Booked","Location","Available","Brand","Occupancy","MovieName","Mode","LastUpdatedOn","TotalCost","Screen","Showtime"
+"12603072","148","20$ approx","NSW","15","Liverpool","147","Event Cinemas","9.3%","Thankam","Auto","26/01/2023 9:35:01 PM","300 $","7","Sat 28 January 3:00 PM"
+"12603088","148","20$ approx","NSW","15","Liverpool","147","Event Cinemas","9.3%","Thankam","Auto","26/01/2023 9:35:01 PM","300 $","7","Sat 28 January 8:45 PM"
+"12597682","190","20$ approx","NSW","5","Parramatta","187","Event Cinemas","2.6%","Thankam","Auto","26/01/2023 9:35:02 PM","100 $","2","Sat 28 January 3:15 PM"
+"12597690","191","20$ approx","NSW","4","Parramatta","188","Event Cinemas","2.1%","Thankam","Auto","26/01/2023 9:35:02 PM","80 $","2","Sat 28 January 9:00 PM"
+"12598156","88","20$ approx","NSW","13","Burwood","87","Event Cinemas","13%","Thankam","Auto","26/01/2023 9:35:03 PM","260 $","12","Sat 28 January 3:00 PM"
