@@ -16,3 +16,4 @@ jobs:
       shell: pwsh
       run: |
         .\scripts\checkMovieSessions.ps1
+
