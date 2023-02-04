@@ -385,7 +385,7 @@ Class MovieStats {
 
             UploadToGithub(){
                 [String] $fileNameInsideStatsFolder = $this.movieFolderId +"/" + $this.movieDate + ".csv"
-                $contents = ""
+                <#$contents = ""
                 #try{
                     #$contents = $this.csvData | ConvertTo-Csv -join [Environment]::NewLine -NoTypeInformation 
                     $contents = $this.csvData | Export-Csv -Path "C:\ME\outfile.csv" -NoTypeInformation -Encoding UTF8
@@ -393,7 +393,7 @@ Class MovieStats {
                     #$this.outputMessage += "`n" + "content text =  " + $contents
                   
                    
-                <#}catch{
+                }catch{
                 
                 }
                 #>
@@ -428,7 +428,7 @@ Class MovieStats {
                 $url = "https://api.github.com/repos/meppadiyan/movieStats/contents/stats/" + $fileNameInsideStatsFolder;
                 $contentType = "application/vnd.github+json"      
                 #$bearerAuth = "Bearer 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"
-                $bearerAuth = "Bearer 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"
+                $bearerAuth = "Bearer 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"
                 $encodedBytes = [System.Text.Encoding]::UTF8.GetBytes($contents)
                 $content = [System.Convert]::ToBase64String($encodedBytes)
 
@@ -460,29 +460,41 @@ Class MovieStats {
             }
 }
 
-$pathaanMovieStats = [MovieStats]::new("Pathaan","Pathaan","HO00007906",@('MTDRTT','BANKTN','WESCIN','WETHER'),"2023-02-03","Hoyts Cinemas")
-$pathaanMovieStats.Init()
-$pathaanMovieStats.UploadToGithub()
-$pathaanMovieStats
+$nanpakalMovieStats = [MovieStats]::new("Nanpakal","Nanpakal","",@('19','66','58'),"2023-02-04","Event Cinemas")
+$nanpakalMovieStats.Init()
+$nanpakalMovieStats.UploadToGithub()
+$nanpakalMovieStats
 
-<#
-$thankamMovieStats = [MovieStats]::new("Thankam","Thankam","",@('19','66','58'),"2023-02-03","Event Cinemas")
-$thankamMovieStats.Init()
-$thankamMovieStats.UploadToGithub()
-$thankamMovieStats
-
-$varisuMovieStats = [MovieStats]::new("Varisu","Varisu","",@('58','65','53','21','62','7','19','55','66','69','9'),"2023-02-03","Event Cinemas")
+$varisuMovieStats = [MovieStats]::new("Varisu","Varisu","",@('58','65','53','21','62','7','19','55','66','69','9'),"2023-02-04","Event Cinemas")
 $varisuMovieStats.Init()
 $varisuMovieStats.UploadToGithub()
 $varisuMovieStats
 
 
-$pathaanMovieStats = [MovieStats]::new("Pathaan","Pathaan","",@('19','21','53','55','58','62','65','66','69','7','9'),"2023-02-03","Event Cinemas")
+$pathaanMovieStats = [MovieStats]::new("Pathaan","Pathaan","",@('19','21','53','55','58','62','65','66','69','7','9'),"2023-02-04","Event Cinemas")
 $pathaanMovieStats.Init()
 $pathaanMovieStats.UploadToGithub()
 $pathaanMovieStats
 
-$pathaanMovieStats = [MovieStats]::new("Pathaan","Pathaan","HO00007906",@('MTDRTT','BANKTN','WESCIN','WETHER'),"2023-02-03","Hoyts Cinemas")
+<#
+
+$nanpakalMovieStats = [MovieStats]::new("Nanpakal","Nanpakal","",@('19','66','58'),"2023-02-04","Event Cinemas")
+$nanpakalMovieStats.Init()
+$nanpakalMovieStats.UploadToGithub()
+$nanpakalMovieStats
+
+$varisuMovieStats = [MovieStats]::new("Varisu","Varisu","",@('58','65','53','21','62','7','19','55','66','69','9'),"2023-02-04","Event Cinemas")
+$varisuMovieStats.Init()
+$varisuMovieStats.UploadToGithub()
+$varisuMovieStats
+
+
+$pathaanMovieStats = [MovieStats]::new("Pathaan","Pathaan","",@('19','21','53','55','58','62','65','66','69','7','9'),"2023-02-04","Event Cinemas")
+$pathaanMovieStats.Init()
+$pathaanMovieStats.UploadToGithub()
+$pathaanMovieStats
+
+$pathaanMovieStats = [MovieStats]::new("Pathaan","Pathaan","HO00007906",@('MTDRTT','BANKTN','WESCIN','WETHER'),"2023-02-04","Hoyts Cinemas")
 $pathaanMovieStats.Init()
 $pathaanMovieStats.UploadToGithub()
 $pathaanMovieStats
