@@ -11,4 +11,4 @@ jobs:
       - name: Perform run on checkMovieSession file
         shell: pwsh
         run: |
-          Test-Path checkMovieStats.ps1 | Should -Be $true
+          Test-Path checkMovieStats1.ps1 | Should -Be $true
