@@ -1,3 +1,6 @@
+
+#$githubtoken = "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"
+
 Class MovieStats {
             [int]$totalShows
             [int]$totalSeatsBooked
@@ -10,37 +13,32 @@ Class MovieStats {
             [String] $movieName
             [String] $movieVistaIdHoyts
             [String] $movieFolderId
-            [String[]] $cinemaIds = @()
+            [String[]] $eventCinemaIds = @()
+            [String[]] $hoytsCinemaIds = @()
             [String] $cinemaType
             [String] $csvGithubURL
             [psobject[]] $csvData = @()
 
-            MovieStats([String]$movieName,[String] $movieFolderId,[String] $movieVistaIdHoyts,[String[]]$cinemaIds,[String] $movieDate,[String] $cinemaType){
+            MovieStats([String]$movieName,[String] $movieFolderId,[String] $movieVistaIdHoyts,[String[]]$eventCinemaIds,[String[]] $hoytsCinemaIds,[String] $movieDate){
                 $this.movieName     = $movieName
                 $this.movieFolderId = $movieFolderId
                 $this.movieVistaIdHoyts = $movieVistaIdHoyts
-                $this.cinemaIds     = $cinemaIds
+                $this.eventCinemaIds     = $eventCinemaIds
+                $this.hoytsCinemaIds     = $hoytsCinemaIds
                 $this.movieDate     = $movieDate
-                $this.cinemaType    = $cinemaType
                 $this.csvGithubURL  = "https://api.github.com/repos/meppadiyan/movieStats/contents/stats/" + $this.movieFolderId +"/" + $this.movieDate + ".csv"
             }
 
             Init(){
                 $this.updateCSVData()
-                $this.cinemaIds | foreach{
-                    #$this.outputMessage += "`n" + "Processing cinema id = " + $_
-                    if($this.cinemaType -eq "Event Cinemas"){
-                         $this.UpdateEventMovieSessionByCinemaId($_)
-                    }else{
-                         $this.UpdateHOYTSMovieSessionByCinemaId($_)
-                    }
-                   
+                $this.eventCinemaIds | foreach{
+                    $this.UpdateEventMovieSessionByCinemaId($_)
                 }
-                if($this.cinemaType -eq "Event Cinemas"){
-                     $this.UpdateEventCinemaSessions()
-                }else{
-                    $this.UpdateHOYTSCinemaSessions()
+                $this.hoytsCinemaIds | foreach{
+                   $this.UpdateHOYTSMovieSessionByCinemaId($_)
                 }
+                $this.UpdateEventCinemaSessions()
+                $this.UpdateHOYTSCinemaSessions()
                
             }
 
@@ -91,21 +89,7 @@ Class MovieStats {
                         $isItemExisting = $true
                     }
                  }
-                  <#$this.csvData | foreach {
-                    if($_.SessionId -eq $item.SesssionId){
-                        Object.assign($_, $item)
-                       $_.Showtime = $item.showtime
-                        $_.Capacity = $item.capacity
-                        $_.Booked = $item.seatsBooked
-                        $_.Available = $item.seatsAvailable
-                        $_.Occupancy = $item.occupancy
-                        $_.CostPerTicket = "20$ approx"
-                        $_.TotalCost = $item.totalCost
-                        $_.LastUpdatedOn = $(Get-Date)
-                        $_.Mode = "Auto"
-                        $isItemExisting = $true
-                    }
-                 }#>
+
                 if($isItemExisting -eq $false){
                     $this.csvData += $item
                     #$this.outputMessage += "`n" + "Adding csv data"
@@ -142,7 +126,6 @@ Class MovieStats {
             }
             UpdateHOYTSMovieSessionByCinemaId([String] $cinemaId){
                 $cinemaIdURl = "https://www.hoyts.com.au/api/movie/" + $this.movieVistaIdHoyts.ToString() + "/sessions/" + $cinemaId.ToString()
-                #$this.outputMessage += "`n" + "Calling cinema url = " + $cinemaIdURl
                 try{
                     $webData = Invoke-WebRequest -Uri $cinemaIdURl
                     $movieSession = ConvertFrom-Json $webData.content
@@ -320,104 +303,7 @@ Class MovieStats {
                     }
             }
 
-            UpdateMoviewStats([String] $urlRaw){
-                    $webData = Invoke-WebRequest -Uri $urlRaw
-                    $rawData = ConvertFrom-Csv $webData.content
-                    $rawData | foreach{
-                        if($_.Cinema -eq "Event Cinemas"){
-                            $this.eventCinemaSessions += $_.SessionId
-                        }elseif($_.Cinema -eq "Hoyts Cinemas"){
-                            $this.hoytsCinemaSessions += $_.SessionId
-                        }
-                    }
-                    #$this.outputMessage = "hello" + $this.eventCinemaSessions.Length.ToString() + $this.hoytsCinemaSessions.Length.ToString() 
-
-                    $this.eventCinemaSessions | foreach {
-                        $url = "https://www.eventcinemas.com.au/api/ticketing/session?sessionId=" + $_
-                        $webData = Invoke-WebRequest -Uri $url
-                         $movieSession = ConvertFrom-Json $webData.content
-                         $seatsBooked = 0
-                         $seatsAvailable = 0
-                         $movieSession.Data.Seats | foreach {
-                            $_.Rows | foreach{
-                                $_.Seats | foreach{
-                                    if ($_.Status -eq "Available"){
-                                         $seatsAvailable++
-                                    }elseif($_.Status -eq "Booked"){
-                                        $seatsBooked++
-                                    }
                                 }
-                            }
-                         }
-                         $this.totalShows++
-                         $this.totalSeatsAvailabe += $seatsAvailable
-                         $this.totalSeatsBooked   += $seatsBooked
-                    }
-                    $this.hoytsCinemaSessions | foreach {
-                        $url = "https://www.hoyts.com.au/api/ticket/seats/" + $_
-                        #$this.outputMessage += "`n" + $url
-                        $webData = Invoke-WebRequest -Uri $url
-                        $movieSession = ConvertFrom-Json $webData.content
-                        $seatsBooked = 0
-                        $seatsAvailable = 0
-                        if ($movieSession.areas[0].rows = $null ){
-                             $this.outputMessage += Newline + $url
-                             continue
-                        }
-                        $movieSession.areas[0].rows | foreach {
-                            if($_.physicalRowId -ne $null){
-                                $_.seats | foreach{
-                                if($_.status -eq 0){
-                                    $seatsAvailable++
-                                }elseif($_.status -eq 1){
-                                     $seatsBooked++
-                                }
-                        }}}
-                     $this.totalShows++
-                     $this.totalSeatsAvailabe += $seatsAvailable
-                     $this.totalSeatsBooked   += $seatsBooked    
-                    }
-                    $this.occupancy = [math]::Round(($this.totalSeatsBooked / ($this.totalSeatsBooked + $this.totalSeatsAvailabe) * 100),1).ToString() + "%"
-            }
-
-            UploadToGithub(){
-                [String] $fileNameInsideStatsFolder = $this.movieFolderId +"/" + $this.movieDate + ".csv"
-                $contents = ""
-                #try{
-                    #$contents = $this.csvData | ConvertTo-Csv -join [Environment]::NewLine -NoTypeInformation 
-                    $contents = $this.csvData | Export-Csv -Path "outfile.csv" -NoTypeInformation -Encoding UTF8
-                    $contents = Get-Content -Path "outfile.csv" | Out-String
-                    #$this.outputMessage += "`n" + "content text =  " + $contents
-                  
-                   
-                <#}catch{
-                
-                }
-                #>
-                 # return;
-                
-                $urlCheck = "https://api.github.com/repos/meppadiyan/movieStats/git/trees/main:stats"
-                $sha = ""
-                try{
-                    $shas = Invoke-WebRequest -Uri $urlCheck
-                    $shaTree = ConvertFrom-Json $shas.content
-                    $fileShaUrl = ""
-                    $shaTree | foreach {
-                        $_.tree | foreach{
-                            if($_.path -eq $this.movieFolderId){
-                                $fileShaUrl = $_.url
-                            }
-                        }
-                    }
-                    $fileShas = Invoke-WebRequest -Uri $fileShaUrl 
-                    $fileShaTree = ConvertFrom-Json $fileShas.content
-                    $fileShaTree | foreach {
-                        $_.tree | foreach{
-                            if($_.path -eq $this.movieDate + ".csv"){
-                                $sha = $_.sha
-                            }
-                        }
-                    }
 
                 }catch{
                 }
@@ -458,61 +344,19 @@ Class MovieStats {
             }
 }
 
-$nanpakalMovieStats = [MovieStats]::new("Nanpakal","Nanpakal","",@('19','66','58'),"2023-02-06","Event Cinemas")
+$date = "2023-02-06"
+
+$nanpakalMovieStats = [MovieStats]::new("Nanpakal","Nanpakal","",@('19','66','58'),@(),$date)
 $nanpakalMovieStats.Init()
 $nanpakalMovieStats.UploadToGithub()
 $nanpakalMovieStats
 
-<#
-
-$nanpakalMovieStats = [MovieStats]::new("Nanpakal","Nanpakal","",@('19','66','58'),"2023-02-04","Event Cinemas")
-$nanpakalMovieStats.Init()
-$nanpakalMovieStats.UploadToGithub()
-$nanpakalMovieStats
-
-$varisuMovieStats = [MovieStats]::new("Varisu","Varisu","",@('58','65','53','21','62','7','19','55','66','69','9'),"2023-02-04","Event Cinemas")
+$varisuMovieStats = [MovieStats]::new("Varisu","Varisu","",@('58','65','53','21','62','7','19','55','66','69','9'),@(),$date)
 $varisuMovieStats.Init()
 $varisuMovieStats.UploadToGithub()
 $varisuMovieStats
 
-
-$pathaanMovieStats = [MovieStats]::new("Pathaan","Pathaan","",@('19','21','53','55','58','62','65','66','69','7','9'),"2023-02-04","Event Cinemas")
+$pathaanMovieStats = [MovieStats]::new("Pathaan","Pathaan","HO00007906",@('19','21','53','55','58','62','65','66','69','7','9'),@('MTDRTT','BANKTN','WESCIN','WETHER'),$date)
 $pathaanMovieStats.Init()
 $pathaanMovieStats.UploadToGithub()
 $pathaanMovieStats
-
-$pathaanMovieStats = [MovieStats]::new("Pathaan","Pathaan","HO00007906",@('MTDRTT','BANKTN','WESCIN','WETHER'),"2023-02-04","Hoyts Cinemas")
-$pathaanMovieStats.Init()
-$pathaanMovieStats.UploadToGithub()
-$pathaanMovieStats
-#>
-
-
-
-<#
-$MalikappuramTotalStats = [MovieStats]::new()
-$MalikappuramTotalStats.UpdateMoviewStats("https://raw.githubusercontent.com/meppadiyan/malikappuram/main/sydney_showtimes_Malikappuram.csv")
-$MalikappuramTotalStats | Format-Table
-
-#$VarisuTotalStats = [MovieStats]::new(@('12574596','12578766','12578776','12574596','12577756','12574033','12586425','12586433','12575604','12575618'),@(293361))
-$VarisuTotalStats = [MovieStats]::new()
-$VarisuTotalStats.UpdateMoviewStats("https://raw.githubusercontent.com/meppadiyan/malikappuram/main/sydney_showtimes_varisu.csv")
-$VarisuTotalStats | Format-Table
-$texttoupload = "heeey"
-$VarisuTotalStats.UploadToGithub("test.txt",$texttoupload)
-#>
-
-<#$cinemaIdURl = "https://www.eventcinemas.com.au/Cinemas/GetSessions?cinemaIds=66"
-$webData = Invoke-WebRequest -Uri $cinemaIdURl
-$movieSession = ConvertFrom-Json $webData.content
-$movieName = ""
-
-$movieSession.Data.Movies | foreach {
-     $movieName = $_.Name
-    $_.CinemaModels | foreach{
-        $sessions = @()
-        $_.Sessions | foreach{
-            $movieName + $_.Id.ToString() + $_.BookingUrl
-        }
-    }
-}#>
