@@ -304,7 +304,9 @@ Class MovieStats {
                 [String] $fileNameInsideStatsFolder = $this.movieFolderId +"/" + $this.movieDate + ".csv"
                 $contents = ""
                 #try{
-                    #$contents = $this.csvData | ConvertTo-Csv -join [Environment]::NewLine -NoTypeInformation 
+                    if($this.csvData == $null){
+                        return
+                    }
                     $contents = $this.csvData | Export-Csv -Path "outfile.csv" -NoTypeInformation -Encoding UTF8
                     $contents = Get-Content -Path "outfile.csv" | Out-String
                     #$this.outputMessage += "`n" + "content text =  " + $contents
