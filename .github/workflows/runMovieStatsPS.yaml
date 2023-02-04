@@ -11,4 +11,4 @@ jobs:
       - name: Perform run on checkMovieSession file
         shell: pwsh
         run: |
-          ./scripts/checkMovieSessions.ps1
+          Write-Host "Hello, World!"
