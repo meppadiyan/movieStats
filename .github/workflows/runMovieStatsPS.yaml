@@ -11,4 +11,4 @@ jobs:
       - name: Perform run on checkMovieSession file
         shell: pwsh
         run: |
-          .\checkMovieSessions.ps1
+          ./scripts/checkMovieSessions.ps1
