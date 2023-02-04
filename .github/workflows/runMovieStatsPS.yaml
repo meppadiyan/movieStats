@@ -1,6 +1,7 @@
 name: Test PowerShell on Ubuntu
-on: push
-
+on:
+  schedule:
+    - cron: "0 6,8,10,12,14,15,16,17,18,19,20,21 * * *"
 jobs:
   ps-test:
     name: Powershell test
