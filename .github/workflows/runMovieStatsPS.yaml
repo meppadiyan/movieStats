@@ -11,6 +11,6 @@ jobs:
       - name: Perform run on checkMovieSession file
         shell: pwsh
         env:
-          githubtoken : ${{secrets.GITHUB_TOKEN_GENERATED }}
+          githubtoken : ${{secrets.G_TOKEN }}
         run: |
           ./checkMovieStats.ps1
