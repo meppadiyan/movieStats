@@ -8,8 +8,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-      - name: Perform a Pester test from the command-line
-      - name: Perform a Pester test from the Tests.ps1 file
+      - name: Perform run on checkMovieSession file
         shell: pwsh
         run: |
           .\scripts\checkMovieSessions.ps1
