@@ -1,5 +1,5 @@
 
-#$githubtoken = "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"
+$githubtoken = $githubToken = $env:GITHUB_TOKEN
 
 Class MovieStats {
             [int]$totalShows
@@ -428,7 +428,7 @@ Class MovieStats {
                 $url = "https://api.github.com/repos/meppadiyan/movieStats/contents/stats/" + $fileNameInsideStatsFolder;
                 $contentType = "application/vnd.github+json"      
                 #$bearerAuth = "Bearer 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"
-                $bearerAuth = "Bearer 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"
+                $bearerAuth = "Bearer $githubtoken"
                 $encodedBytes = [System.Text.Encoding]::UTF8.GetBytes($contents)
                 $content = [System.Convert]::ToBase64String($encodedBytes)
 
