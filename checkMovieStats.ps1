@@ -385,15 +385,15 @@ Class MovieStats {
 
             UploadToGithub(){
                 [String] $fileNameInsideStatsFolder = $this.movieFolderId +"/" + $this.movieDate + ".csv"
-                <#$contents = ""
+                $contents = ""
                 #try{
                     #$contents = $this.csvData | ConvertTo-Csv -join [Environment]::NewLine -NoTypeInformation 
-                    $contents = $this.csvData | Export-Csv -Path "C:\ME\outfile.csv" -NoTypeInformation -Encoding UTF8
-                    $contents = Get-Content -Path "C:\ME\outfile.csv" | Out-String
+                    $contents = $this.csvData | Export-Csv -Path "outfile.csv" -NoTypeInformation -Encoding UTF8
+                    $contents = Get-Content -Path "outfile.csv" | Out-String
                     #$this.outputMessage += "`n" + "content text =  " + $contents
                   
                    
-                }catch{
+                <#}catch{
                 
                 }
                 #>
