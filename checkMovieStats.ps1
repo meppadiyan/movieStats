@@ -1,5 +1,5 @@
 
-$githubtoken = $githubToken = $env:GITHUB_TOKEN
+$githubtoken = $env:GITHUB_TOKEN
 
 Class MovieStats {
             [int]$totalShows
