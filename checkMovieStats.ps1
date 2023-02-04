@@ -453,7 +453,6 @@ Class MovieStats {
                 $headers = @{
                     Authorization = $bearerAuth
                 };
-                return;
                 Invoke-RestMethod -Method PUT -Uri $url -ContentType $contentType -Headers $headers -Body $json
             }
 }
