@@ -424,7 +424,7 @@ Class MovieStats {
                 
                 $url = "https://api.github.com/repos/meppadiyan/movieStats/contents/stats/" + $fileNameInsideStatsFolder;
                 $contentType = "application/vnd.github+json"   
-                $githubtoken = $env:GITHUB_TOKEN
+                $githubtoken = $env:githubtoken
                 #$bearerAuth = "Bearer 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"
                 $bearerAuth = "Bearer $githubtoken"
                 $encodedBytes = [System.Text.Encoding]::UTF8.GetBytes($contents)
