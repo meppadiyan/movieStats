@@ -453,6 +453,7 @@ Class MovieStats {
                 $headers = @{
                     Authorization = $bearerAuth
                 };
+                $this.WriteOutputLine($false,$githubtoken)
                 Invoke-RestMethod -Method PUT -Uri $url -ContentType $contentType -Headers $headers -Body $json
             }
 }
