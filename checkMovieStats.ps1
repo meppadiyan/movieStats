@@ -304,7 +304,7 @@ Class MovieStats {
                 [String] $fileNameInsideStatsFolder = $this.movieFolderId +"/" + $this.movieDate + ".csv"
                 $contents = ""
                 #try{
-                    if($this.csvData == $null){
+                    if($this.csvData -eq $null){
                         return
                     }
                     $contents = $this.csvData | Export-Csv -Path "outfile.csv" -NoTypeInformation -Encoding UTF8
