@@ -458,21 +458,10 @@ Class MovieStats {
             }
 }
 
-$nanpakalMovieStats = [MovieStats]::new("Nanpakal","Nanpakal","",@('19','66','58'),"2023-02-04","Event Cinemas")
+$nanpakalMovieStats = [MovieStats]::new("Nanpakal","Nanpakal","",@('19','66','58'),"2023-02-05","Event Cinemas")
 $nanpakalMovieStats.Init()
 $nanpakalMovieStats.UploadToGithub()
 $nanpakalMovieStats
-
-$varisuMovieStats = [MovieStats]::new("Varisu","Varisu","",@('58','65','53','21','62','7','19','55','66','69','9'),"2023-02-04","Event Cinemas")
-$varisuMovieStats.Init()
-$varisuMovieStats.UploadToGithub()
-$varisuMovieStats
-
-
-$pathaanMovieStats = [MovieStats]::new("Pathaan","Pathaan","",@('19','21','53','55','58','62','65','66','69','7','9'),"2023-02-04","Event Cinemas")
-$pathaanMovieStats.Init()
-$pathaanMovieStats.UploadToGithub()
-$pathaanMovieStats
 
 <#
 
