@@ -388,9 +388,9 @@ $nanpakalMovieStats
 <#$varisuMovieStats = [MovieStats]::new("Varisu","Varisu","",@('58','65','53','21','62','7','19','55','66','69','9'),@(),$date)
 $varisuMovieStats.Init()
 $varisuMovieStats.UploadToGithub()
-$varisuMovieStats
+$varisuMovieStats#>
 
 $pathaanMovieStats = [MovieStats]::new("Pathaan","Pathaan","HO00007906",@('19','21','53','55','58','62','65','66','69','7','9'),@('MTDRTT','BANKTN','WESCIN','WETHER'),$date)
 $pathaanMovieStats.Init()
 $pathaanMovieStats.UploadToGithub()
-$pathaanMovieStats#>
+$pathaanMovieStats
