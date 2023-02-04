@@ -1,6 +1,3 @@
-
-#$githubtoken = "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"
-
 Class MovieStats {
             [int]$totalShows
             [int]$totalSeatsBooked
@@ -303,7 +300,44 @@ Class MovieStats {
                     }
             }
 
-                                }
+            UploadToGithub(){
+                [String] $fileNameInsideStatsFolder = $this.movieFolderId +"/" + $this.movieDate + ".csv"
+                $contents = ""
+                #try{
+                    #$contents = $this.csvData | ConvertTo-Csv -join [Environment]::NewLine -NoTypeInformation 
+                    $contents = $this.csvData | Export-Csv -Path "outfile.csv" -NoTypeInformation -Encoding UTF8
+                    $contents = Get-Content -Path "outfile.csv" | Out-String
+                    #$this.outputMessage += "`n" + "content text =  " + $contents
+                  
+                   
+                <#}catch{
+                
+                }
+                #>
+                 # return;
+                
+                $urlCheck = "https://api.github.com/repos/meppadiyan/movieStats/git/trees/main:stats"
+                $sha = ""
+                try{
+                    $shas = Invoke-WebRequest -Uri $urlCheck
+                    $shaTree = ConvertFrom-Json $shas.content
+                    $fileShaUrl = ""
+                    $shaTree | foreach {
+                        $_.tree | foreach{
+                            if($_.path -eq $this.movieFolderId){
+                                $fileShaUrl = $_.url
+                            }
+                        }
+                    }
+                    $fileShas = Invoke-WebRequest -Uri $fileShaUrl 
+                    $fileShaTree = ConvertFrom-Json $fileShas.content
+                    $fileShaTree | foreach {
+                        $_.tree | foreach{
+                            if($_.path -eq $this.movieDate + ".csv"){
+                                $sha = $_.sha
+                            }
+                        }
+                    }
 
                 }catch{
                 }
@@ -344,7 +378,7 @@ Class MovieStats {
             }
 }
 
-$date = "2023-02-06"
+$date = "2023-02-05"
 
 $nanpakalMovieStats = [MovieStats]::new("Nanpakal","Nanpakal","",@('19','66','58'),@(),$date)
 $nanpakalMovieStats.Init()
