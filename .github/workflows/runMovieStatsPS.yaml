@@ -11,4 +11,4 @@ jobs:
       - name: Perform run on checkMovieSession file
         shell: pwsh
         run: |
-          Invoke-Pester ./scripts/checkMovieSessions.ps1 -Passthru
+          ./checkMovieSessions.ps1 -Path /scripts
