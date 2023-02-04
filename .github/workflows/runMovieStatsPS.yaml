@@ -2,8 +2,8 @@ name: Test PowerShell on Ubuntu
 on: push
 
 jobs:
-  pester-test:
-    name: Pester test
+  ps-test:
+    name: Powershell test
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -11,4 +11,4 @@ jobs:
       - name: Perform run on checkMovieSession file
         shell: pwsh
         run: |
-          .\scripts\checkMovieSessions.ps1
+          .\checkMovieSessions.ps1
