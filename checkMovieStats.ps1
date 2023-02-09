@@ -380,9 +380,14 @@ Class MovieStats {
             }
 }
 
-$date = "2023-02-08"
+$date = "2023-02-09"
 
 $nanpakalMovieStats = [MovieStats]::new("Nanpakal","Nanpakal","",@('19','66','58'),@(),$date)
+$nanpakalMovieStats.Init()
+$nanpakalMovieStats.UploadToGithub()
+$nanpakalMovieStats
+
+$nanpakalMovieStats = [MovieStats]::new("Spadikam","Spadikam","",@('19','66','58'),@(),$date)
 $nanpakalMovieStats.Init()
 $nanpakalMovieStats.UploadToGithub()
 $nanpakalMovieStats
