@@ -380,7 +380,7 @@ Class MovieStats {
             }
 }
 
-$date = "2023-02-17"
+$date = "2023-02-18"
 
 $nanpakalMovieStats = [MovieStats]::new("Nanpakal","Nanpakal","",@('19','66','58'),@(),$date)
 $nanpakalMovieStats.Init()
