@@ -1,4 +1,4 @@
-description,bms_show_count,bms_count,paytm_show_count,paytm_amount,source
+description,bms_show_count,bms_amount,paytm_show_count,paytm_amount,source
 2022-03-03,2594,31814488,313,5395773,https://github.com/HedCET/bms/tree/main/BheeshmaParvam/db256f.2022-03-03.csv;https://github.com/HedCET/paytm-movies/tree/main/BheeshmaParvam/675e50.2022-03-03.csv
 2022-03-04,2099,19270717,246,3204978,https://github.com/HedCET/bms/tree/main/BheeshmaParvam/db256f.2022-03-04.csv;https://github.com/HedCET/paytm-movies/tree/main/BheeshmaParvam/675e50.2022-03-04.csv
 2022-03-05,2349,26295199,260,4040234,https://github.com/HedCET/bms/tree/main/BheeshmaParvam/db256f.2022-03-05.csv;https://github.com/HedCET/paytm-movies/tree/main/BheeshmaParvam/675e50.2022-03-05.csv
